@@ -1,8 +1,7 @@
 import pygame, sys
 
 def ball_movement():
-    global ball_speed_x
-    global ball_speed_y
+    global ball_speed_x, ball_speed_y
 
     ball.x += ball_speed_x
     ball.y += ball_speed_y
@@ -13,8 +12,16 @@ def ball_movement():
     if ball.left <= 0 or ball.right >= screen_width:
         ball_speed_x *= -1
 
+    # If the ball collides wth the Player and opponent
     if ball.colliderect(player) or ball.colliderect(opponent):
         ball_speed_x *= -1
+    
+def player_movement():
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_DOWN:
+            player_speed += 7
+        if event.key == pygame.K_UP:
+            player_speed -= 7
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -36,6 +43,7 @@ light_grey = (200, 200 ,200)
 # Speed Variables
 ball_speed_x = 7
 ball_speed_y = 7
+player_speed = 0
 
 while True:
     # taking input
@@ -43,7 +51,21 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_DOWN:
+                player_speed += 7
+            if event.key == pygame.K_UP:
+                player_speed -= 7
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_DOWN:
+                player_speed -= 7
+            if event.key == pygame.K_UP:
+                player_speed += 7        
+
+
     ball_movement()
+    player.y += player_speedx
+    player_movement()
 
     # Drawing the stuff we defined
     screen.fill(bg)
