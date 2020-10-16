@@ -1,4 +1,6 @@
-import pygame, sys
+import pygame
+import sys
+import random
 
 def ball_movement():
     global ball_speed_x, ball_speed_y
@@ -10,18 +12,36 @@ def ball_movement():
     if ball.top <= 0 or ball.bottom >= screen_height:
         ball_speed_y *= -1
     if ball.left <= 0 or ball.right >= screen_width:
-        ball_speed_x *= -1
+        ball_restart()
 
     # If the ball collides wth the Player and opponent
     if ball.colliderect(player) or ball.colliderect(opponent):
         ball_speed_x *= -1
     
 def player_movement():
-    if event.type == pygame.KEYDOWN:
-        if event.key == pygame.K_DOWN:
-            player_speed += 7
-        if event.key == pygame.K_UP:
-            player_speed -= 7
+    player.y += player_speed
+    if player.top <= 0:
+        player.top = 0
+    if player.bottom >= screen_height:
+        player.bottom = screen_height
+
+def opponent_ai():
+    if opponent.top < ball.y:
+        opponent.top += opponent_speed
+    if opponent.bottom > ball.y:
+        opponent.bottom -= opponent_speed
+    if opponent.top <= 0:
+        opponent.top = 0
+    if opponent.bottom >= screen_height:
+        opponent.bottom = screen_height
+
+def ball_restart():
+    global ball_speed_x
+    global ball_speed_y
+    ball.center = (screen_width/2, screen_height/2)
+    ball_speed_y *= random.choice((1, -1))
+    ball_speed_x *= random.choice((1, -1))
+        
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -44,6 +64,7 @@ light_grey = (200, 200 ,200)
 ball_speed_x = 7
 ball_speed_y = 7
 player_speed = 0
+opponent_speed = 7
 
 while True:
     # taking input
@@ -64,8 +85,8 @@ while True:
 
 
     ball_movement()
-    player.y += player_speedx
     player_movement()
+    opponent_ai()
 
     # Drawing the stuff we defined
     screen.fill(bg)
