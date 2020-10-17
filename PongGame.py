@@ -6,16 +6,27 @@ def ball_movement():
     ball.y += ball_speed_y
     # making the ball bounce
     if ball.top <= 0 or ball.bottom >= screen_height:
+        pygame.mixer.Sound.play(hitSound)
         ball_speed_y *= -1
+
+    # Player Score
     if ball.left <= 0 :
+        pygame.mixer.Sound.play(scoreSound)
         player_score += 1
         score_time = pygame.time.get_ticks()
+
+    # Opponent Score
     if ball.right >= screen_width:
+        pygame.mixer.Sound.play(scoreSound)
         opponent_score += 1
         score_time = pygame.time.get_ticks()
 
     # If the ball collides wth the Player and opponent
-    if ball.colliderect(player) or ball.colliderect(opponent):
+    if ball.colliderect(player) and ball_speed_x > 0:
+        pygame.mixer.Sound.play(hitSound)
+        ball_speed_x *= -1
+    if ball.colliderect(opponent) and ball_speed_x < 0:
+        pygame.mixer.Sound.play(hitSound)
         ball_speed_x *= -1
     
 def player_movement():
@@ -60,6 +71,7 @@ def ball_restart():
         
 
 # General setup
+pygame.mixer.pre_init(44100, -16, 2, 512)
 pygame.init()
 clock = pygame.time.Clock()
 
@@ -92,6 +104,10 @@ game_font = pygame.font.Font("freesansbold.ttf", 40)
 # Score Timer
 score_time = True
 
+# Sound Files
+hitSound = pygame.mixer.Sound("pong.ogg")
+scoreSound = pygame.mixer.Sound("score.ogg")
+
 while True:
     # taking input
     for event in pygame.event.get():
@@ -107,7 +123,10 @@ while True:
             if event.key == pygame.K_DOWN:
                 player_speed -= 7
             if event.key == pygame.K_UP:
-                player_speed += 7        
+                player_speed += 7   
+        if opponent_score >= 10 or player_score >= 10:
+            pygame.quit()
+            sys.exit()     
 
     # Game Logic
     ball_movement()
