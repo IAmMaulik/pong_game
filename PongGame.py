@@ -91,8 +91,8 @@ bg = pygame.Color('grey12')
 light_grey = (200, 200 ,200)
 
 # Speed Variables
-ball_speed_x = 7
-ball_speed_y = 7
+ball_speed_x = random.randint(0, 8)
+ball_speed_y = random.randint(0, 8)
 player_speed = 0
 opponent_speed = 7
 
