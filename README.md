@@ -1,9 +1,45 @@
-### Hello Everyone
-# This is a fun Pong game I made
-I made this in python using the pygame library. 
-It was a really fun project and I really learnt a lot by making this project.
+# Pong Game
+> This is a pong game which is a clone of the original pong game which was played on the TRS-80
 
-## Point to note: 
-- I you use Visual Studio Code as your IDE, you should copy the line in the settings.json file and paste in your user settings. It is to disable pylint and will help you to get rid of the useless squiglly lines that VSCode makes while using pygame.
+## Table of contents
+* [General info](#general-info)
+* [Screenshots](#screenshots)
+* [Modules Used](#modules)
+* [Features](#features)
+* [Setup](#setup)
+* [Status](#status)
+* [Inspiration](#inspiration)
 
-## Hope you enjoy
+## General info
+In this project, I have used the PyGame library for the major part and the sys and random module.
+
+## Screenshots
+![Example screenshot](./images/screenshot.PNG)
+
+## Modules
+* Pygame
+* sys
+* random
+
+## Features
+* Countdown timer before starting to get ready
+* You can play with the computer as your opponent
+* Score board to keep track of the score (also to know how bad you are against the computer)
+
+## Setup
+* Clone the repository with 
+```
+git clone <enter this page url>
+```
+* Write this in yout terminal
+```
+pip install -r requirements.txt
+OR
+pip install pygame
+```
+
+## Status
+Project is:_finished_
+
+## Inspiration
+Inspired by the original pong game on the TRS-80
